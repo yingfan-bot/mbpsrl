@@ -36,7 +36,7 @@ if __name__ == '__main__':
                         help='episode number of testing the trained cem')
     parser.add_argument('--test', dest='test', action='store_true', help='use test mode or train mode')
     parser.add_argument('--filename', default='cem_pendulum_params.json', metavar='M', help='saved params')
-    parser.add_argument('--alpha', type=float, default=0., metavar='T',
+    parser.add_argument('--alpha', type=float, default=0.1, metavar='T',
                         help='Controls how much of the previous mean and variance is used for the next iteration.')
     parser.add_argument('--plan-hor', type=int, default=20, metavar='NS', help='number of choosing best params')
     parser.add_argument('--max-iters', type=int, default=5, metavar='NS', help='iteration of cem')
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
     parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
-    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=3.0, metavar='T', help='var')
 
     args = parser.parse_args()
     print("current dir:", os.getcwd())
