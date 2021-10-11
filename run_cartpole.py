@@ -55,6 +55,7 @@ if __name__ == '__main__':
                         help='episode number of testing the trained cem')
     parser.add_argument('--var', type=float, default=0.5, metavar='T', help='var')
     args = parser.parse_args()
+
     print("current dir:", os.getcwd())
     if 'CartPole-continuous' in args.env:
         env = ContinuousCartPoleEnv()

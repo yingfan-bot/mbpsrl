@@ -71,7 +71,7 @@ if __name__ == '__main__':
     sub = env.observation_space.high
     alb = env.action_space.low
     aub = env.action_space.high
-        # print(slb, sub, alb, aub)
+
     obs_shape = env.observation_space.shape[0]
     action_shape = len([env.action_space.sample()])
 
