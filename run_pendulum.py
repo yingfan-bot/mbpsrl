@@ -13,7 +13,7 @@ from NB_dx_tf import neural_bays_dx_tf
 
 from tf_models.constructor import construct_shallow_model, construct_shallow_cost_model, construct_model, construct_cost_model
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 
 if __name__ == '__main__':
@@ -29,9 +29,9 @@ if __name__ == '__main__':
                         help='predict y with bias')
     parser.add_argument('--input_normalize', type=bool, default = False, metavar='NS',
                         help='input normalization')
-    parser.add_argument('--num-iters', type=int, default=500, metavar='NS',
+    parser.add_argument('--num-iters', type=int, default=100, metavar='NS',
                         help='number of iterating the distribution params')
-    parser.add_argument('--num-elites', type=int, default=50, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--num-elites', type=int, default=5, metavar='NS', help='number of choosing best params')
     parser.add_argument('--num-trajs', type=int, default=100, metavar='NS',
                         help='number of sampling from params distribution')
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     parser.add_argument('--filename', default='cem_pendulum_params.json', metavar='M', help='saved params')
     parser.add_argument('--alpha', type=float, default=0., metavar='T',
                         help='Controls how much of the previous mean and variance is used for the next iteration.')
-    parser.add_argument('--plan-hor', type=int, default=30, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--plan-hor', type=int, default=20, metavar='NS', help='number of choosing best params')
     parser.add_argument('--max-iters', type=int, default=5, metavar='NS', help='iteration of cem')
     parser.add_argument('--epsilon', type=float, default=0.001, metavar='NS', help='threshold for cem iteration')
     parser.add_argument('--gpu-ids', type=int, default=None, nargs='+', help='GPUs to use [-1 CPU only] (default: -1)')
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
     parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
-    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=3.0, metavar='T', help='var')
 
     args = parser.parse_args()
     print("current dir:", os.getcwd())
@@ -78,17 +78,18 @@ if __name__ == '__main__':
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
     cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=10, num_networks=1, num_elites=1)
 
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=0.01**2,sigma2= 1**2)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=0.01**2,sigma2= 0.01**2)
 
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = 0.01**2,sigma2 = 1**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = 0.01**2,sigma2 = 0.01**2)
 
 
-    cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
+
 
     num_episode = 15
     rewards = []
     for episode in range(num_episode):
         state = torch.tensor(env.reset())
+        cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
         if 'Pendulum-v0' in args.env:
             state = state.squeeze()
         time_step = 0
