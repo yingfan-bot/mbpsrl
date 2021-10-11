@@ -21,9 +21,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=None)
     parser.add_argument('--env', default='Pendulum-v0', metavar='ENV',
                         help='env :[Pendulum-v0, CartPole-v0,CartPole-continuous]')
-    parser.add_argument('--use_sample', type=bool, default=False, metavar='NS')
-    parser.add_argument('--sample_per_epoch', type=bool, default=False, metavar='NS')
-    parser.add_argument('--sample_per_batch', type=bool, default=False, metavar='NS')
 
     parser.add_argument('--predict_with_bias', type=bool, default = True, metavar='NS',
                         help='predict y with bias')
@@ -54,7 +51,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
     parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
-    parser.add_argument('--var', type=float, default=3.0, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
 
     args = parser.parse_args()
     print("current dir:", os.getcwd())
@@ -80,10 +77,7 @@ if __name__ == '__main__':
 
     my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=0.01**2,sigma2= 0.01**2)
 
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = 0.01**2,sigma2 = 0.01**2)
-
-
-
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = 0.01**2,sigma2 =  0.01**2)
 
     num_episode = 15
     rewards = []
