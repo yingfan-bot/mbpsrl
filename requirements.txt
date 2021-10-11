@@ -1,0 +1,53 @@
+absl-py @ file:///tmp/build/80754af9/absl-py_1600297527605/work
+astor==0.8.1
+blessings==1.7
+certifi==2020.6.20
+chardet==3.0.4
+cycler==0.10.0
+dotmap==1.3.17
+gast @ file:///tmp/build/80754af9/gast_1597433534803/work
+google-pasta==0.2.0
+gpflow==1.0.0
+gpustat==0.6.0
+graphviz==0.8.4
+grpcio @ file:///tmp/build/80754af9/grpcio_1597424467487/work
+gym==0.9.4
+h5py @ file:///tmp/build/80754af9/h5py_1593454119955/work
+idna==2.10
+importlib-metadata @ file:///tmp/build/80754af9/importlib-metadata_1593446408836/work
+Keras-Applications @ file:///tmp/build/80754af9/keras-applications_1594366238411/work
+Keras-Preprocessing==1.1.0
+kiwisolver==1.2.0
+Markdown @ file:///tmp/build/80754af9/markdown_1597433218422/work
+matplotlib==3.3.2
+mkl-fft==1.1.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+mujoco-py==0.5.7
+mxnet==1.7.0.post1
+numpy==1.16.5
+nvidia-ml-py3==7.352.0
+olefile==0.46
+pandas==1.1.2
+Pillow @ file:///tmp/build/80754af9/pillow_1594307325547/work
+protobuf==3.13.0
+psutil==5.7.2
+pyglet==1.5.7
+PyOpenGL==3.1.5
+pyparsing==2.4.7
+python-dateutil==2.8.1
+pytz==2020.1
+requests==2.24.0
+scipy==1.3.3
+six==1.15.0
+tensorboard==1.14.0
+tensorflow==1.14.0
+tensorflow-estimator==1.14.0
+termcolor==1.1.0
+torch==1.4.0
+torchvision==0.5.0
+tqdm==4.49.0
+urllib3==1.25.10
+Werkzeug==1.0.1
+wrapt==1.12.1
+zipp==3.1.0
