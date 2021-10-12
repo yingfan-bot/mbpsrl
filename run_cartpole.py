@@ -76,17 +76,17 @@ if __name__ == '__main__':
     obs_shape = env.observation_space.shape[0]
     action_shape = len(env.action_space.sample())
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
-    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=10, num_networks=1, num_elites=1)
+    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
 
     my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma2=0.01**2, sigma_n2=0.01**2)
 
     my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2=0.01**2, sigma_n2=0.01**2)
-
+    cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
 
     avg_loss = []
     num_episode = 30
     for episode in range(num_episode):
-        cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
+
         # if episode > 19:
         #     cem = CEM(env, args, my_dx, num_elites = args.num_elites, num_trajs = args.num_trajs, alpha = args.alpha, device = device, use_mean = True)
         state = torch.tensor(env.reset())

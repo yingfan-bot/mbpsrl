@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
     my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=1e-4**2,sigma2=1e-3**2)
     my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2=1e-4**2,sigma2=1e-3**2)
-
+    cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
 
 
 
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     avg_loss = []
     num_episode = 30
     for episode in range(num_episode):
-        cem = CEM(env, args, my_dx, my_cost, num_elites = args.num_elites, num_trajs = args.num_trajs, alpha = args.alpha)
+
         # if episode > 19:
         #     cem = CEM(env, args, my_dx, num_elites = args.num_elites, num_trajs = args.num_trajs, alpha = args.alpha, device = device, use_mean = True)
         state = torch.tensor(env.reset())
