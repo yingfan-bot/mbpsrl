@@ -26,8 +26,6 @@ if __name__ == '__main__':
                         help='predict y with bias')
     parser.add_argument('--input_normalize', type=bool, default = False, metavar='NS',
                         help='input normalization')
-    parser.add_argument('--num-iters', type=int, default=100, metavar='NS',
-                        help='number of iterating the distribution params')
     parser.add_argument('--num-elites', type=int, default=50, metavar='NS', help='number of choosing best params')
     parser.add_argument('--num-trajs', type=int, default=500, metavar='NS',
                         help='number of sampling from params distribution')
@@ -51,7 +49,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
     parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
-    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=2.0, metavar='T', help='var')
 
     args = parser.parse_args()
     print("current dir:", os.getcwd())
