@@ -71,7 +71,7 @@ if __name__ == '__main__':
     action_shape = len([env.action_space.sample()])
 
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
-    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=10, num_networks=1, num_elites=1)
+    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
 
     my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=0.01**2,sigma2= 0.1**2)
 
