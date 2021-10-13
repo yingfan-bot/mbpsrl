@@ -87,8 +87,8 @@ if __name__ == '__main__':
     cost_model = construct_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
 
 
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=1e-3**2,sigma2=1e-2**2)
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2=1e-3**2,sigma2=1e-2**2)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=1e-3**2,sigma2=1e-1**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2=1e-3**2,sigma2=1e-1**2)
     cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
 
 
