@@ -34,9 +34,9 @@ if __name__ == '__main__':
                         help='episode number of testing the trained cem')
     parser.add_argument('--test', dest='test', action='store_true', help='use test mode or train mode')
     parser.add_argument('--filename', default='cem_pendulum_params.json', metavar='M', help='saved params')
-    parser.add_argument('--alpha', type=float, default=0., metavar='T',
+    parser.add_argument('--alpha', type=float, default=0.1, metavar='T',
                         help='Controls how much of the previous mean and variance is used for the next iteration.')
-    parser.add_argument('--plan-hor', type=int, default=20, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--plan-hor', type=int, default=30, metavar='NS', help='number of choosing best params')
     parser.add_argument('--max-iters', type=int, default=5, metavar='NS', help='iteration of cem')
     parser.add_argument('--epsilon', type=float, default=0.001, metavar='NS', help='threshold for cem iteration')
     parser.add_argument('--gpu-ids', type=int, default=None, nargs='+', help='GPUs to use [-1 CPU only] (default: -1)')
