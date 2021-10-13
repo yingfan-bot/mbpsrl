@@ -24,9 +24,9 @@ if __name__ == '__main__':
     parser.add_argument('--sigma', type=float, default=0.01, metavar='T', help='var for betas')
     parser.add_argument('--sigma_n', type=float, default=0.01, metavar='T', help='var for noise')
     parser.add_argument('--hidden-dim-dx', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-dx', type=int, default=100, metavar='NS')
+    parser.add_argument('--training-iter-dx', type=int, default=50, metavar='NS')
     parser.add_argument('--hidden-dim-cost', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-cost', type=int, default=100, metavar='NS')
+    parser.add_argument('--training-iter-cost', type=int, default=50, metavar='NS')
 
     parser.add_argument('--num-trajs', type=int, default=500, metavar='NS',
                         help='number of sampling from params distribution')
@@ -37,7 +37,7 @@ if __name__ == '__main__':
                         help='env :[Pendulum-v0, CartPole-v0,CartPole-continuous]')
     parser.add_argument('--num-iters', type=int, default=100, metavar='NS',
                         help='number of iterating the distribution params')
-    parser.add_argument('--plan-hor', type=int, default=20, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--plan-hor', type=int, default=30, metavar='NS', help='number of choosing best params')
 
     # 500
     parser.add_argument('--test-episodes', type=int, default=100, metavar='NS',
