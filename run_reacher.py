@@ -87,9 +87,9 @@ if __name__ == '__main__':
     cost_model = construct_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
 
 
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=1e-3**2,sigma2=1e-1**2)
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2=1e-3**2,sigma2=1e-1**2)
-    cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=1e-4**2,sigma2=1e-3**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2=1e-4**2,sigma2=1e-3**2)
+
 
 
 
@@ -98,6 +98,7 @@ if __name__ == '__main__':
     avg_loss = []
     num_episode = 30
     for episode in range(num_episode):
+        cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
 
         # if episode > 19:
         #     cem = CEM(env, args, my_dx, num_elites = args.num_elites, num_trajs = args.num_trajs, alpha = args.alpha, device = device, use_mean = True)
@@ -164,12 +165,12 @@ if __name__ == '__main__':
 
         print('avg cost loss: ', avg_cost_loss/num_steps)
 
-        my_dx.train(epochs = 100)
+        my_dx.train(epochs = 50)
         my_dx.update_bays_reg()
         # if args.input_normalize:
         # #     my_dx.fit_input_stats()
         #     my_cost.fit_input_stats()
-        my_cost.train(epochs = 100)
+        my_cost.train(epochs = 50)
         my_cost.update_bays_reg()
 
         print(avg_loss)
