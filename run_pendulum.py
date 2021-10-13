@@ -34,7 +34,7 @@ if __name__ == '__main__':
                         help='episode number of testing the trained cem')
     parser.add_argument('--test', dest='test', action='store_true', help='use test mode or train mode')
     parser.add_argument('--filename', default='cem_pendulum_params.json', metavar='M', help='saved params')
-    parser.add_argument('--alpha', type=float, default=0., metavar='T',
+    parser.add_argument('--alpha', type=float, default=0.1, metavar='T',
                         help='Controls how much of the previous mean and variance is used for the next iteration.')
     parser.add_argument('--plan-hor', type=int, default=20, metavar='NS', help='number of choosing best params')
     parser.add_argument('--max-iters', type=int, default=5, metavar='NS', help='iteration of cem')
@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
     parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
-    parser.add_argument('--var', type=float, default=3.0, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
 
     args = parser.parse_args()
     print("current dir:", os.getcwd())
@@ -71,11 +71,11 @@ if __name__ == '__main__':
     action_shape = len([env.action_space.sample()])
 
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
-    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
+    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=10, num_networks=1, num_elites=1)
 
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=0.01**2,sigma2= 0.1**2)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=0.01**2,sigma2= 1**2)
 
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = 0.01**2,sigma2 = 0.1**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = 0.01**2,sigma2 = 1**2)
 
     cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
 

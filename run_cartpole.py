@@ -37,7 +37,7 @@ if __name__ == '__main__':
                         help='env :[Pendulum-v0, CartPole-v0,CartPole-continuous]')
     parser.add_argument('--num-iters', type=int, default=100, metavar='NS',
                         help='number of iterating the distribution params')
-    parser.add_argument('--plan-hor', type=int, default=30, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--plan-hor', type=int, default=20, metavar='NS', help='number of choosing best params')
 
     # 500
     parser.add_argument('--test-episodes', type=int, default=100, metavar='NS',
@@ -53,7 +53,7 @@ if __name__ == '__main__':
                         help='use true env in collecting trajectories')
     parser.add_argument('--collect-step', type=int, default=200, metavar='NS',
                         help='episode number of testing the trained cem')
-    parser.add_argument('--var', type=float, default=0.5, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=0.25, metavar='T', help='var')
     args = parser.parse_args()
 
     print("current dir:", os.getcwd())
@@ -76,11 +76,11 @@ if __name__ == '__main__':
     obs_shape = env.observation_space.shape[0]
     action_shape = len(env.action_space.sample())
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
-    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
+    cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=10, num_networks=1, num_elites=1)
 
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma2=0.01**2, sigma_n2=0.01**2)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma2=1**2, sigma_n2=0.01**2)
 
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2=0.01**2, sigma_n2=0.01**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2=1**2, sigma_n2=0.01**2)
     cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
 
     avg_loss = []
