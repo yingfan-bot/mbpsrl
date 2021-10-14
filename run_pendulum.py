@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
     parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
-    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=3.0, metavar='T', help='var')
 
     args = parser.parse_args()
     print("current dir:", os.getcwd())
