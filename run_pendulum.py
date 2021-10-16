@@ -1,24 +1,22 @@
-rewards = []
-def main():
-    import numpy as np
-    import gym
-    import heapq
-    import argparse
-    import json
-    import os
-    from pendulum_gym import PendulumEnv
-    from cartpole_continuous import ContinuousCartPoleEnv
-    import torch
-    from CEM_without import CEM
-    import scipy.stats as stats
-    from NB_dx_tf import neural_bays_dx_tf
+import numpy as np
+import gym
+import heapq
+import argparse
+import json
+import os
+from pendulum_gym import PendulumEnv
+from cartpole_continuous import ContinuousCartPoleEnv
+import torch
+from CEM_without import CEM
+import scipy.stats as stats
+from NB_dx_tf import neural_bays_dx_tf
 
-    from tf_models.constructor import construct_shallow_model, construct_shallow_cost_model, construct_model, construct_cost_model
+from tf_models.constructor import construct_shallow_model, construct_shallow_cost_model, construct_model, construct_cost_model
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 
-
+if __name__ == '__main__':
     os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
     parser = argparse.ArgumentParser(description=None)
     parser.add_argument('--env', default='Pendulum-v0', metavar='ENV',
@@ -38,7 +36,7 @@ def main():
     parser.add_argument('--filename', default='cem_pendulum_params.json', metavar='M', help='saved params')
     parser.add_argument('--alpha', type=float, default=0.1, metavar='T',
                         help='Controls how much of the previous mean and variance is used for the next iteration.')
-    parser.add_argument('--plan-hor', type=int, default=20, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--plan-hor', type=int, default=30, metavar='NS', help='number of choosing best params')
     parser.add_argument('--max-iters', type=int, default=5, metavar='NS', help='iteration of cem')
     parser.add_argument('--epsilon', type=float, default=0.001, metavar='NS', help='threshold for cem iteration')
     parser.add_argument('--gpu-ids', type=int, default=None, nargs='+', help='GPUs to use [-1 CPU only] (default: -1)')
@@ -82,7 +80,7 @@ def main():
 
 
     num_episode = 10
-
+    rewards = []
     for episode in range(num_episode):
         cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
         state = torch.tensor(env.reset())
@@ -99,6 +97,8 @@ def main():
         avg_cost_loss = 0
 
         num_steps = 200
+
+
         for _ in range(num_steps):
             if episode == 0:
                 best_action = env.action_space.sample()
@@ -158,5 +158,5 @@ def main():
         np.savetxt('pen_without.txt', np.array(rewards))
 
 
-for _ in range(5):
-    main()
+# for _ in range(5):
+#     main()
