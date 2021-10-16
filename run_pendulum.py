@@ -24,10 +24,8 @@ if __name__ == '__main__':
 
     parser.add_argument('--predict_with_bias', type=bool, default = True, metavar='NS',
                         help='predict y with bias')
-    parser.add_argument('--input_normalize', type=bool, default = False, metavar='NS',
-                        help='input normalization')
-    parser.add_argument('--num-elites', type=int, default=5, metavar='NS', help='number of choosing best params')
-    parser.add_argument('--num-trajs', type=int, default=100, metavar='NS',
+    parser.add_argument('--num-elites', type=int, default=25, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--num-trajs', type=int, default=500, metavar='NS',
                         help='number of sampling from params distribution')
 
     parser.add_argument('--test-episodes', type=int, default=100, metavar='NS',
@@ -79,7 +77,7 @@ if __name__ == '__main__':
 
 
 
-    num_episode = 10
+    num_episode = 15
     rewards = []
     for episode in range(num_episode):
         cem = CEM(env, args, my_dx, my_cost, num_elites=args.num_elites, num_trajs=args.num_trajs, alpha=args.alpha)
