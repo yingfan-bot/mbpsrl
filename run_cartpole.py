@@ -37,7 +37,7 @@ if __name__ == '__main__':
                         help='env :[Pendulum-v0, CartPole-v0,CartPole-continuous]')
     parser.add_argument('--num-iters', type=int, default=100, metavar='NS',
                         help='number of iterating the distribution params')
-    parser.add_argument('--plan-hor', type=int, default=30, metavar='NS', help='number of choosing best params')
+    parser.add_argument('--plan-hor', type=int, default=25, metavar='NS', help='number of choosing best params')
 
     # 500
     parser.add_argument('--test-episodes', type=int, default=100, metavar='NS',
