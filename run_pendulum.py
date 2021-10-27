@@ -13,7 +13,7 @@ from NB_dx_tf import neural_bays_dx_tf
 
 from tf_models.constructor import construct_shallow_model, construct_shallow_cost_model, construct_model, construct_cost_model
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
 if __name__ == '__main__':
