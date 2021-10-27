@@ -78,6 +78,7 @@ class PendulumEnv():
             self.cur_step += 1
         else:
             done = True
+        costs += np.random.normal(0,0.01)
 
         return self._get_obs(), -costs, done, {}
 

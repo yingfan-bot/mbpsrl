@@ -107,6 +107,7 @@ class ContinuousCartPoleEnv():
 #                 """)
             self.steps_beyond_done += 1
             reward = 0.0
+        reward += np.random.normal(0, 0.01)
 
         return np.array(self.state), reward, done, {}
 

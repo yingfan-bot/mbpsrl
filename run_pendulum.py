@@ -109,7 +109,7 @@ if __name__ == '__main__':
                 best_action = np.array([best_action])
             # best_action = env.action_space.sample()
             new_state, r, done, _ = env.step(best_action)
-            r += np.random.normal(0,0.01)
+
             r = torch.tensor(r)
             new_state = torch.tensor(new_state)
             if 'Pendulum-v0' in args.env:
