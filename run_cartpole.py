@@ -24,9 +24,9 @@ if __name__ == '__main__':
     parser.add_argument('--sigma', type=float, default=0.01, metavar='T', help='var for betas')
     parser.add_argument('--sigma_n', type=float, default=0.01, metavar='T', help='var for noise')
     parser.add_argument('--hidden-dim-dx', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-dx', type=int, default=100, metavar='NS')
+    parser.add_argument('--training-iter-dx', type=int, default=200, metavar='NS')
     parser.add_argument('--hidden-dim-cost', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-cost', type=int, default=100, metavar='NS')
+    parser.add_argument('--training-iter-cost', type=int, default=200, metavar='NS')
 
     parser.add_argument('--num-trajs', type=int, default=500, metavar='NS',
                         help='number of sampling from params distribution')
@@ -53,7 +53,7 @@ if __name__ == '__main__':
                         help='use true env in collecting trajectories')
     parser.add_argument('--collect-step', type=int, default=200, metavar='NS',
                         help='episode number of testing the trained cem')
-    parser.add_argument('--var', type=float, default=0.25, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
     args = parser.parse_args()
 
     print("current dir:", os.getcwd())
@@ -78,9 +78,9 @@ if __name__ == '__main__':
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
     cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=10, num_networks=1, num_elites=1)
 
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma2=0.01**2, sigma_n2=0.01**2)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma2=0.01**2, sigma_n2=0.001**2)
 
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2=0.01**2, sigma_n2=0.01**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2=0.01**2, sigma_n2=0.001**2)
 
 
     avg_loss = []
@@ -117,7 +117,7 @@ if __name__ == '__main__':
             new_state, r, done, _ = env.step(best_action)
             # print("reward", r)
             r = torch.tensor(r)
-            r += np.random.normal(0,0.01)
+            # r += np.random.normal(0,0.01)
             new_state = torch.tensor(new_state)
             if 'Pendulum-v0' in args.env:
                 new_state = new_state.squeeze()
