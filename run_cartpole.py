@@ -117,7 +117,7 @@ if __name__ == '__main__':
             new_state, r, done, _ = env.step(best_action)
             # print("reward", r)
             r = torch.tensor(r)
-            # r += np.random.normal(0,0.01)
+            r += np.random.normal(0,0.01)
             new_state = torch.tensor(new_state)
             if 'Pendulum-v0' in args.env:
                 new_state = new_state.squeeze()
