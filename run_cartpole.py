@@ -24,9 +24,9 @@ if __name__ == '__main__':
     parser.add_argument('--sigma', type=float, default=0.01, metavar='T', help='var for betas')
     parser.add_argument('--sigma_n', type=float, default=0.01, metavar='T', help='var for noise')
     parser.add_argument('--hidden-dim-dx', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-dx', type=int, default=200, metavar='NS')
+    parser.add_argument('--training-iter-dx', type=int, default=100, metavar='NS')
     parser.add_argument('--hidden-dim-cost', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-cost', type=int, default=200, metavar='NS')
+    parser.add_argument('--training-iter-cost', type=int, default=100, metavar='NS')
 
     parser.add_argument('--num-trajs', type=int, default=500, metavar='NS',
                         help='number of sampling from params distribution')
