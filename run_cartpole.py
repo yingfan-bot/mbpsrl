@@ -64,10 +64,10 @@ if __name__ == '__main__':
     obs_shape = env.observation_space.shape[0]
     action_shape = len(env.action_space.sample())
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma2=1e-2**2, sigma_n2=1e-3**2)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma2=1e-2**2, sigma_n2=1e-2**2)
     if not args.with_reward:
         cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=10, num_networks=1, num_elites=1)
-        my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2=1e-3**2, sigma_n2=1e-4**2)
+        my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2=1e-5**2, sigma_n2=1e-5**2)
 
     cum_rewards = []
     num_episode = 15
