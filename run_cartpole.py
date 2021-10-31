@@ -12,7 +12,7 @@ from NB_dx_tf import neural_bays_dx_tf
 
 from tf_models.constructor import construct_shallow_model, construct_shallow_cost_model, construct_model, construct_cost_model
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
 if __name__ == '__main__':
@@ -25,9 +25,9 @@ if __name__ == '__main__':
     parser.add_argument('--sigma', type=float, default=1e-2, metavar='T', help='var for betas')
     parser.add_argument('--sigma_n', type=float, default=1e-2, metavar='T', help='var for noise')
     parser.add_argument('--hidden-dim-dx', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-dx', type=int, default=200, metavar='NS')
+    parser.add_argument('--training-iter-dx', type=int, default=100, metavar='NS')
     parser.add_argument('--hidden-dim-cost', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-cost', type=int, default=200, metavar='NS')
+    parser.add_argument('--training-iter-cost', type=int, default=100, metavar='NS')
     parser.add_argument('--predict_with_bias', type=bool, default=True, metavar='NS',
                         help='predict y with bias in BLR')
     # CEM parameters
