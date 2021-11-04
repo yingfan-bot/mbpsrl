@@ -95,6 +95,7 @@ class CEM():
             pre_ss = new_pre_ss
             pre_cum_hori_rewards += pre_r
 
+        pre_cum_hori_rewards = np.nan_to_num(pre_cum_hori_rewards)
         elite_indices = list(
             map(pre_cum_hori_rewards.tolist().index, heapq.nlargest(self.num_elites, pre_cum_hori_rewards.tolist())))
         best_indice = pre_cum_hori_rewards.tolist().index(max(pre_cum_hori_rewards.tolist()))

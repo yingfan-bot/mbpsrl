@@ -102,7 +102,7 @@ class CEM():
 
     def get_actual_cost_pusher(self, obs):
         to_w, og_w = 0.5, 1.25
-        tip_pos, obj_pos, goal_pos = obs[:, 14:17], obs[:, 17:20], env.ac_goal_pos
+        tip_pos, obj_pos, goal_pos = obs[:, 14:17], obs[:, 17:20], self.env.ac_goal_pos
         goal_pos = np.repeat(goal_pos.reshape(-1, 1), obs.shape[0], axis = 1).T
         goal_pos = torch.tensor(goal_pos)
         assert isinstance(obs, torch.Tensor)
@@ -168,20 +168,21 @@ class CEM():
             xu = np.concatenate((pre_ss.squeeze(), action_s),1)
             new_pre_ss = self.my_dx.predict(xu)
 
-            if self.env_name == 'CartPole-continuous'
-                pre_r = self.get_actual_cost_cartpole(pre_ss, action_s)
+            if self.env_name == 'CartPole-continuous':
+                pre_r = self.get_actual_cost_cartpole(torch.Tensor(xu))
             elif self.env_name == 'Pendulum-v0':
                 pre_r = self.get_actual_cost_pendulum(pre_ss, action_s)
-            elif self.env_name == 'Pusher":
-                pre_r = self.get_actual_cost_pusher(pre_ss, action_s)
-            elif self.env_name == 'Reacher":
+            elif self.env_name == 'Pusher':
+                pre_r = self.get_actual_cost_pusher(torch.Tensor(xu))
+            elif self.env_name == 'Reacher':
                 pre_r = self.get_actual_cost_reacher(pre_ss, action_s)
 
             pre_ss = new_pre_ss
-            # pre_r = pre_r.detach().cpu().numpy()
+            if torch.is_tensor(pre_r):
+                pre_r = pre_r.detach().cpu().numpy()
             pre_cum_hori_rewards += pre_r.reshape(-1, 1)
 
-
+        pre_cum_hori_rewards = np.nan_to_num(pre_cum_hori_rewards)
         elite_indices = list(map(pre_cum_hori_rewards.tolist().index, heapq.nlargest(self.num_elites, pre_cum_hori_rewards.tolist())))
         best_indice = pre_cum_hori_rewards.tolist().index(max(pre_cum_hori_rewards.tolist()))
 
