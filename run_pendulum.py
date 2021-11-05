@@ -26,7 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--num-elites', type=int, default=5, metavar='NS', help='number of choosing best params')
     parser.add_argument('--num-trajs', type=int, default=100, metavar='NS',
                         help='number of sampling from params distribution')
-    parser.add_argument('--alpha', type=float, default=0.1, metavar='T',
+    parser.add_argument('--alpha', type=float, default=0., metavar='T',
                         help='Controls how much of the previous mean and variance is used for the next iteration.')
     parser.add_argument('--plan-hor', type=int, default=30, metavar='NS', help='number of choosing best params')
     parser.add_argument('--max-iters', type=int, default=5, metavar='NS', help='iteration of cem')
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
     parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
-    parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
+    parser.add_argument('--var', type=float, default=3.0, metavar='T', help='var')
     parser.add_argument('--predict_with_bias', type=bool, default = True, metavar='NS',
                         help='predict y with bias')
 
