@@ -23,6 +23,8 @@ if __name__ == '__main__':
                         help='env :[Pendulum-v0, CartPole-v0,CartPole-continuous]')
     parser.add_argument('--with-reward', type=bool, default=False, metavar='NS',
                         help='predict with true rewards or not')
+    parser.add_argument('--sigma', type=float, default=1e1, metavar='T', help='var for betas')
+    parser.add_argument('--sigma_n', type=float, default=1e-3, metavar='T', help='var for noise')
     parser.add_argument('--num-elites', type=int, default=5, metavar='NS', help='number of choosing best params')
     parser.add_argument('--num-trajs', type=int, default=100, metavar='NS',
                         help='number of sampling from params distribution')
@@ -35,8 +37,8 @@ if __name__ == '__main__':
 
     parser.add_argument('--hidden-dim-cost', type=int, default=200, metavar='NS')
 
-    parser.add_argument('--training-iter-dx', type=int, default=40, metavar='NS')
-    parser.add_argument('--training-iter-cost', type=int, default=60, metavar='NS')
+    parser.add_argument('--training-iter-dx', type=int, default=200, metavar='NS')
+    parser.add_argument('--training-iter-cost', type=int, default=200, metavar='NS')
     parser.add_argument('--var', type=float, default=3.0, metavar='T', help='var')
     parser.add_argument('--predict_with_bias', type=bool, default = True, metavar='NS',
                         help='predict y with bias')
@@ -63,9 +65,9 @@ if __name__ == '__main__':
     dx_model = construct_shallow_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
     cost_model = construct_shallow_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
 
-    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=0.001**2,sigma2= 10**2)
+    my_dx = neural_bays_dx_tf(args, dx_model, "dx", obs_shape, sigma_n2=args.sigma_n**2,sigma2=args.sigma**2)
 
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = 0.001**2,sigma2 = 10**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma_n2 = args.sigma_n**2,sigma2 = args.sigma**2)
 
 
 
@@ -118,10 +120,10 @@ if __name__ == '__main__':
         print(episode, ': cumulative rewards', cum_reward.item())
 
         cum_rewards.append([episode, cum_reward.tolist()])
-        my_dx.train(epochs=200)
+        my_dx.train(args.training_iter_dx)
         my_dx.update_bays_reg()
         if not args.with_reward:
-            my_cost.train(epochs=200)
+            my_cost.train(args.training_iter_cost)
             my_cost.update_bays_reg()
         np.savetxt('pendulum_log.txt', cum_rewards)
 

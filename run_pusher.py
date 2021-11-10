@@ -14,7 +14,7 @@ from NB_dx_tf import  neural_bays_dx_tf
 from CEM_without import CEM
 import os
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 
 if __name__ == '__main__':
     os.environ['KMP_DUPLICATE_LIB_OK']='True'
@@ -25,16 +25,16 @@ if __name__ == '__main__':
     parser.add_argument('--predict_with_bias', type=bool, default = True, metavar='NS',
                         help='predict y with bias')
     parser.add_argument('--sigma', type=float, default=1e-03, metavar='T', help='var for betas')
-    parser.add_argument('--sigma_n', type=float, default=1e-05, metavar='T', help='var for noise')
+    parser.add_argument('--sigma_n', type=float, default=1e-04, metavar='T', help='var for noise')
     parser.add_argument('--var', type=float, default=1.0, metavar='T', help='var')
     parser.add_argument('--num-trajs', type=int, default=500, metavar='NS',
                         help='number of sampling from params distribution')
     parser.add_argument('--num-elites', type=int, default=50, metavar='NS', help='number of choosing best params')
 
     parser.add_argument('--hidden-dim-dx', type=int, default = 200, metavar='NS')
-    parser.add_argument('--training-iter-dx', type=int, default=10, metavar='NS')
+    parser.add_argument('--training-iter-dx', type=int, default=5, metavar='NS')
     parser.add_argument('--hidden-dim-cost', type=int, default = 200, metavar='NS')
-    parser.add_argument('--training-iter-cost', type=int, default=100, metavar='NS')
+    parser.add_argument('--training-iter-cost', type=int, default=5, metavar='NS')
 
     parser.add_argument('--alpha', type=float, default=0.1, metavar='T',
                         help='Controls how much of the previous mean and variance is used for the next iteration.')
@@ -69,10 +69,10 @@ if __name__ == '__main__':
     cost_model = construct_cost_model(obs_dim=obs_shape, act_dim=action_shape, hidden_dim=200, num_networks=1, num_elites=1)
 
 
-    my_dx = neural_bays_dx_tf(args, model, "dx", obs_shape, sigma2 = 1e-3**2, sigma_n2 = 1e-4**2)
+    my_dx = neural_bays_dx_tf(args, model, "dx", obs_shape, sigma2 = args.sigma**2, sigma_n2 = args.sigma_n**2)
 
 
-    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2 = 1e-3**2, sigma_n2 = 1e-4**2)
+    my_cost = neural_bays_dx_tf(args, cost_model, "cost", 1, sigma2 = args.sigma**2, sigma_n2 = args.sigma_n**2)
 
 
 
@@ -126,10 +126,10 @@ if __name__ == '__main__':
         print(episode, ': cumulative rewards', cum_reward.item())
 
         cum_rewards.append([episode, cum_reward.tolist()])
-        my_dx.train(epochs=50)
+        my_dx.train(args.training_iter_dx)
         my_dx.update_bays_reg()
         if not args.with_reward:
-            my_cost.train(epochs=50)
+            my_cost.train(args.training_iter_cost)
             my_cost.update_bays_reg()
         np.savetxt('pusher_log.txt', cum_rewards)
 

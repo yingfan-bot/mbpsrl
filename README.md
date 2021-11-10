@@ -1,33 +1,37 @@
 Please see requirements.txt for package dependencies.
 
-Download folder: MPC-PSRL
-cd ./MPC-PSRL
-
-Directly run python files for each environment:
+Directly run files with configuration for each environment:
 
 Stochastic Cartpole: 
-python CEM_CPCR_tf.py 
+
+python run_cartpole.py --with-reward True
 (with oracle rewards)
 
-python CEM_CPC_tf.py 
+python run_cartpole.py --with-reward False
 (without oracle rewards)
 
 Stochastic Pendulum: 
-python CEM_penr_tf.py 
+
+python run_pendulum.py --with-reward True
 (with oracle rewards)
-python CEM_pen_tf.py 
+
+python run_pendulum.py --with-reward False
 (without oracle rewards)
 
 Reacher:
-python CEM_reacher_tf.py 
+
+python run_reacher --with-reward True
 (with oracle rewards)
-python CEM_reacher_without_tf.py 
+
+python run_reacher.py --with-reward False
 (without oracle rewards)
 
 Pusher: 
-python CEM_pusher_tf.py 
+
+python run_pusher.py --with-reward True
 (with oracle rewards)
-python CEM_pusher_without_tf.py 
+
+python run_pusher.py --with-reward False
 (without oracle rewards)
 
-Cumulative rewards are saved in folder MPC-PSRL as .txt files.
+Cumulative rewards are saved as envname_log.txt files.
