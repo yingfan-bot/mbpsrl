@@ -27,7 +27,7 @@ if __name__ == '__main__':
     parser.add_argument('--hidden-dim-dx', type=int, default=200, metavar='NS')
     parser.add_argument('--training-iter-dx', type=int, default=100, metavar='NS')
     parser.add_argument('--hidden-dim-cost', type=int, default=200, metavar='NS')
-    parser.add_argument('--training-iter-cost', type=int, default=200, metavar='NS')
+    parser.add_argument('--training-iter-cost', type=int, default=100, metavar='NS')
     parser.add_argument('--predict_with_bias', type=bool, default=True, metavar='NS',
                         help='predict y with bias in BLR')
     # CEM parameters

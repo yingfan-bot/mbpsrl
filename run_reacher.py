@@ -14,7 +14,7 @@ from NB_dx_tf import neural_bays_dx_tf
 from tf_models.constructor import construct_model, construct_cost_model
 from CEM_without import CEM
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "4"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 if __name__ == '__main__':
     os.environ['KMP_DUPLICATE_LIB_OK']='True'
