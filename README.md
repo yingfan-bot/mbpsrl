@@ -1,6 +1,7 @@
+#Code for paper: Efficient Exploration for Model-based Reinforcement Learning with Continuous States and Actions (https://arxiv.org/abs/2012.09613)
 Please see requirements.txt for package dependencies.
 
-Directly run files with configuration for each environment:
+##Directly run files with configuration for each environment:
 
 Stochastic Cartpole: 
 
