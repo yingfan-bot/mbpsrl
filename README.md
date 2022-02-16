@@ -47,7 +47,6 @@ Cumulative rewards are saved as envname_log.txt files.
 
 If you find the code useful, please cite:
 ```
-
 @InProceedings{pmlr-v139-fan21b,
   title = 	 {Model-based Reinforcement Learning for Continuous Control with Posterior Sampling},
   author =       {Fan, Ying and Ming, Yifei},
